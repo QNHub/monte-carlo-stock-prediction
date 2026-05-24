@@ -1,0 +1,4 @@
+.vscode/
+monte_carlo_cpu.dSYM/
+monte_carlo_cpu
+monte_carlo_gpu
