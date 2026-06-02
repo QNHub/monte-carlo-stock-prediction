@@ -105,15 +105,17 @@ void printResults(double avg, double median, double percentile5th, double percen
     std::cout << "95th pct:   $" << percentile95   << "\n";
 }
 int main(int argc, char* argv[]) {
-    if (argc > 2 || argc < 2) {
+    if (argc > 4 || argc < 2) {
         std::cout << "Invalid argument";
         return 1;
     }
     std::string fileName = argv[1];
+    int simulationCount = std::stoi(argv[2]);
+    int days = std::stoi(argv[3]);
     std::cout<< fileName;
     auto prices = csvPricesParser(fileName);
     auto [mean, stdDev] = computeMetrics(prices);
-    auto [avg, median, percentile5, percentile95] = runSimulations(prices.back(), mean, stdDev, 10000, 30);
+    auto [avg, median, percentile5, percentile95] = runSimulations(prices.back(), mean, stdDev, simulationCount, days);
     printResults(avg, median, percentile5, percentile95);
     return 0;
 }
