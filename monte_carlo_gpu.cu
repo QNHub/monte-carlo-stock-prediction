@@ -141,9 +141,16 @@ void printResults(double avg, double median, double percentile5th, double percen
     std::cout << "5th  pct:   $" << percentile5th    << "\n";
     std::cout << "95th pct:   $" << percentile95   << "\n";
 }
-int main() {
-    auto prices = parsePricesFromCSV("AMD Stock Price History.csv");
+int main(int argc, char* argv[]) {
+    if (argc > 4 || argc < 2) {
+        std::cout << "Invalid argument";
+        return 1;
+    }
+    std::string fileName = argv[1];
+    int simulationCount = std::stoi(argv[2]);
+    int days = std::stoi(argv[3]);
+    auto prices = parsePricesFromCSV(fileName);
     auto [drift, stddev] = computeMetrics(prices);
-    auto [avg, median, percentile5, percentile95] = runSimulations(prices.back(), drift, stddev, 1000000, 30);
+    auto [avg, median, percentile5, percentile95] = runSimulations(prices.back(), drift, stddev, simulationCount, days);
     printResults(avg, median, percentile5, percentile95);
 }
