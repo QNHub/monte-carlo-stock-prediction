@@ -104,9 +104,16 @@ void printResults(double avg, double median, double percentile5th, double percen
     std::cout << "5th  pct:   $" << percentile5th    << "\n";
     std::cout << "95th pct:   $" << percentile95   << "\n";
 }
-int main() {
-    auto prices = csvPricesParser("AMD Stock Price History.csv");
+int main(int argc, char* argv[]) {
+    if (argc > 2 || argc < 2) {
+        std::cout << "Invalid argument";
+        return 1;
+    }
+    std::string fileName = argv[1];
+    std::cout<< fileName;
+    auto prices = csvPricesParser(fileName);
     auto [mean, stdDev] = computeMetrics(prices);
     auto [avg, median, percentile5, percentile95] = runSimulations(prices.back(), mean, stdDev, 10000, 30);
     printResults(avg, median, percentile5, percentile95);
+    return 0;
 }
